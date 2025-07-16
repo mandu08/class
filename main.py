@@ -149,4 +149,4 @@ while auto_run:
         st.write(f"현재 밝기: {brightness:.5f}")
 
     angle_deg = (angle_deg + orbit_speed) % 360  # 각도 증가량 조절
-    time.sleep(0.2)
+    time.sleep(0.01)
