@@ -1,56 +1,45 @@
 import streamlit as st
+import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.font_manager as fm
-import os
 
-# 폰트 경로
-font_path = "NanumGothic.ttf"
+def gravitational_lens_effect():
+    # 렌즈 질량 위치
+    lens_x, lens_y = 0.0, 0.0
+    # 렌즈의 질량 (빛 휘어짐 정도 결정)
+    mass = st.slider("중력 렌즈 질량", 0.1, 10.0, 2.0)
 
-try:
-    # 폰트를 직접 등록하고 이름 강제 지정
-    fm.fontManager.addfont(font_path)
-    plt.rc('font', family='NanumGothic')
-    plt.rcParams['axes.unicode_minus'] = False
+    # 이미지 설정
+    size = 500
+    x = np.linspace(-2, 2, size)
+    y = np.linspace(-2, 2, size)
+    X, Y = np.meshgrid(x, y)
 
-except Exception as e:
-    st.error(f"❌ 폰트 적용 실패: {e}")
-# 제목
-st.title(" 질량중심법칙 시뮬레이션")
+    # 광원 설정 (은하 모양)
+    source_x, source_y = st.slider("광원 위치 (X)", -1.0, 1.0, 0.7), st.slider("광원 위치 (Y)", -1.0, 1.0, 0.0)
+    source_radius = 0.3
+    source_intensity = np.exp(-((X - source_x)**2 + (Y - source_y)**2) / (2 * source_radius**2))
 
-st.markdown("""
-두 물체가 서로 끌어당기며 공전할 때, 그 중심은 어디일까요?
-질량에 따라 **질량중심**이 어떻게 바뀌는지 시각화해보세요!
-""")
+    # 렌즈에 의한 휘어짐 계산 (단순 모델)
+    dx = X - lens_x
+    dy = Y - lens_y
+    r_squared = dx**2 + dy**2 + 1e-4  # 0으로 나눔 방지
+    deflection_x = mass * dx / r_squared
+    deflection_y = mass * dy / r_squared
 
-# 슬라이더: 두 물체의 질량 조절
-mass1 = st.slider("물체 A의 질량 (kg)", 1, 100, 50)
-mass2 = st.slider("물체 B의 질량 (kg)", 1, 100, 50)
+    # 렌즈에 의해 휘어진 좌표
+    lensed_X = X - deflection_x
+    lensed_Y = Y - deflection_y
 
-# 기준 거리 설정 (두 물체 간 거리)
-distance = 10  # 예: 10m 떨어져 있음
+    # 렌즈 효과 반영한 이미지 생성
+    lensed_image = np.exp(-((lensed_X - source_x)**2 + (lensed_Y - source_y)**2) / (2 * source_radius**2))
 
-# 질량중심 계산
-center_from_mass1 = (mass2 / (mass1 + mass2)) * distance
-center_from_mass2 = distance - center_from_mass1
+    # 시각화
+    fig, ax = plt.subplots(figsize=(6,6))
+    ax.imshow(lensed_image, extent=[-2,2,-2,2], origin='lower', cmap='plasma')
+    ax.set_title("중력 렌즈 효과 시뮬레이션")
+    ax.set_xlabel("X")
+    ax.set_ylabel("Y")
+    st.pyplot(fig)
 
-# 좌표 설정
-pos1 = 0
-pos2 = distance
-barycenter = pos1 + center_from_mass1
-
-# 시각화
-fig, ax = plt.subplots(figsize=(8, 2))
-ax.plot([pos1, pos2], [0, 0], 'ko', markersize=15)
-ax.plot(barycenter, 0, 'r*', markersize=20)
-
-ax.text(pos1, 0.1, f"A (질량={mass1}kg)", ha='center')
-ax.text(pos2, 0.1, f"B (질량={mass2}kg)", ha='center')
-ax.text(barycenter, -0.2, "질량중심", ha='center', color='red')
-
-ax.set_xlim(-2, distance + 2)
-ax.set_ylim(-1, 1)
-ax.set_xticks([])
-ax.set_yticks([])
-ax.set_title("두 물체 사이의 질량중심 위치")
-ax.axis('off')
-st.pyplot(fig)
+st.title("🌀 중력 렌즈 효과 시뮬레이션")
+gravitational_lens_effect()
