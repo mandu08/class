@@ -1,57 +1,47 @@
 import streamlit as st
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
-# 타이틀
-st.title("🌌 광원 앞을 지나가는 항성 + 행성 → 밝기 변화 시뮬레이션")
+st.title("🪐 항성 + 행성의 움직임 및 광원 위치 시각화")
 
-# 파라미터 설정
-st.sidebar.header("🔧 시뮬레이션 설정")
+# 설정 파라미터
+st.sidebar.header("🧭 시뮬레이션 설정")
 star_radius = st.sidebar.slider("항성 반지름", 0.1, 0.5, 0.3)
-planet_radius = st.sidebar.slider("행성 반지름", 0.01, 0.2, 0.05)
-planet_orbit_radius = st.sidebar.slider("행성 궤도 반지름", 0.5, 2.0, 1.0)
-star_speed = st.sidebar.slider("항성 이동 속도", 0.0, 0.2, 0.05)
-planet_orbit_speed = st.sidebar.slider("행성 공전 속도", 1.0, 10.0, 5.0)
+planet_radius = st.sidebar.slider("행성 반지름", 0.05, 0.2, 0.08)
+orbit_radius = st.sidebar.slider("행성 궤도 반지름", 0.5, 1.5, 1.0)
+star_speed = st.sidebar.slider("항성의 이동 속도", 0.0, 0.2, 0.05)
+time = st.slider("시간", 0.0, 10.0, 5.0)
 
-# 시간 배열
-time_steps = 1000
-total_time = 10
-times = np.linspace(0, total_time, time_steps)
+# 천체 위치 계산
+source_x, source_y = 0.0, 0.0  # 광원은 고정
+star_x = star_speed * (time - 5.0)
+star_y = 0.0
+planet_angle = 2 * np.pi * time / 2.0  # 공전 주기 고정 (대략 2초로 가정)
+planet_x = star_x + orbit_radius * np.cos(planet_angle)
+planet_y = star_y + orbit_radius * np.sin(planet_angle)
 
-# 광원 위치
-source_x, source_y = 0.0, 0.0
+# 시각화
+fig, ax = plt.subplots(figsize=(6,6))
+ax.set_xlim(-2, 2)
+ax.set_ylim(-2, 2)
+ax.set_aspect('equal')
 
-# 밝기 계산 함수
-brightness = []
+# 광원
+ax.plot(source_x, source_y, marker='*', markersize=20, color='gold', label='광원 (배경별)')
 
-for t in times:
-    # 항성 위치: 직선 이동
-    star_x = star_speed * (t - total_time / 2)
-    star_y = 0
+# 항성
+star_circle = plt.Circle((star_x, star_y), star_radius, color='orange', alpha=0.8, label='항성')
+ax.add_patch(star_circle)
 
-    # 행성 위치: 항성 중심 원형 궤도 공전
-    angle = planet_orbit_speed * t
-    planet_x = star_x + planet_orbit_radius * np.cos(angle)
-    planet_y = star_y + planet_orbit_radius * np.sin(angle)
+# 행성
+planet_circle = plt.Circle((planet_x, planet_y), planet_radius, color='blue', alpha=0.6, label='행성')
+ax.add_patch(planet_circle)
 
-    # 차폐 여부 체크
-    def is_blocking(obj_x, obj_y, radius):
-        distance = np.sqrt((obj_x - source_x)**2 + (obj_y - source_y)**2)
-        return distance < radius
+# 궤도 경로 (시각적 보조용)
+orbit_path = plt.Circle((star_x, star_y), orbit_radius, color='gray', linestyle='--', fill=False)
+ax.add_patch(orbit_path)
 
-    blocked_area = 0
-    if is_blocking(star_x, star_y, star_radius):
-        blocked_area += star_radius**2
-    if is_blocking(planet_x, planet_y, planet_radius):
-        blocked_area += planet_radius**2
-
-    # 밝기 = 원래 밝기 1에서 차폐 면적만큼 감소
-    brightness.append(1 - blocked_area)
-
-# 그래프 출력
-fig, ax = plt.subplots(figsize=(8, 4))
-ax.plot(times, brightness, color="royalblue")
-ax.set_xlabel("시간")
-ax.set_ylabel("밝기")
-ax.set_title("💫 관측 밝기(light curve)")
+# 레이블 및 범례
+ax.set_title(f"시간 = {time:.1f}")
+ax.legend(loc='upper right')
 st.pyplot(fig)
