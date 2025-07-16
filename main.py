@@ -1,45 +1,57 @@
 import streamlit as st
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
-def gravitational_lens_effect():
-    # 렌즈 질량 위치
-    lens_x, lens_y = 0.0, 0.0
-    # 렌즈의 질량 (빛 휘어짐 정도 결정)
-    mass = st.slider("중력 렌즈 질량", 0.1, 10.0, 2.0)
+st.title("🌠 항성과 행성의 통과에 따른 광원 밝기 변화")
 
-    # 이미지 설정
-    size = 500
-    x = np.linspace(-2, 2, size)
-    y = np.linspace(-2, 2, size)
-    X, Y = np.meshgrid(x, y)
+# 시뮬레이션 설정
+total_time = 10  # 총 시뮬레이션 시간
+time_steps = 1000
+times = np.linspace(0, total_time, time_steps)
 
-    # 광원 설정 (은하 모양)
-    source_x, source_y = st.slider("광원 위치 (X)", -1.0, 1.0, 0.7), st.slider("광원 위치 (Y)", -1.0, 1.0, 0.0)
-    source_radius = 0.3
-    source_intensity = np.exp(-((X - source_x)**2 + (Y - source_y)**2) / (2 * source_radius**2))
+# 사용자 입력
+star_radius = st.slider("항성 반지름", 0.1, 0.5, 0.3)
+planet_radius = st.slider("행성 반지름", 0.02, 0.2, 0.1)
+orbit_radius = st.slider("행성 궤도 반지름", 1.0, 2.0, 1.5)
+star_orbit_speed = st.slider("항성의 속도", 0.0, 0.5, 0.1)
+planet_orbit_speed = st.slider("행성의 공전 속도", 1.0, 5.0, 2.0)
 
-    # 렌즈에 의한 휘어짐 계산 (단순 모델)
-    dx = X - lens_x
-    dy = Y - lens_y
-    r_squared = dx**2 + dy**2 + 1e-4  # 0으로 나눔 방지
-    deflection_x = mass * dx / r_squared
-    deflection_y = mass * dy / r_squared
+# 광원의 위치
+source_x = 0.0
+source_y = 0.0
 
-    # 렌즈에 의해 휘어진 좌표
-    lensed_X = X - deflection_x
-    lensed_Y = Y - deflection_y
+# 밝기 시뮬레이션
+brightness = []
 
-    # 렌즈 효과 반영한 이미지 생성
-    lensed_image = np.exp(-((lensed_X - source_x)**2 + (lensed_Y - source_y)**2) / (2 * source_radius**2))
+for t in times:
+    # 항성 위치
+    star_x = star_orbit_speed * (t - total_time/2)
+    star_y = 0
 
-    # 시각화
-    fig, ax = plt.subplots(figsize=(6,6))
-    ax.imshow(lensed_image, extent=[-2,2,-2,2], origin='lower', cmap='plasma')
-    ax.set_title("중력 렌즈 효과 시뮬레이션")
-    ax.set_xlabel("X")
-    ax.set_ylabel("Y")
-    st.pyplot(fig)
+    # 행성 위치 (항성을 중심으로 원형 궤도)
+    angle = planet_orbit_speed * t
+    planet_x = star_x + orbit_radius * np.cos(angle)
+    planet_y = star_y + orbit_radius * np.sin(angle)
 
-st.title("🌀 중력 렌즈 효과 시뮬레이션")
-gravitational_lens_effect()
+    def is_blocking(x_obj, y_obj, radius_obj):
+        dist = np.sqrt((x_obj - source_x)**2 + (y_obj - source_y)**2)
+        return dist < radius_obj
+
+    # 광원 가림 여부 계산
+    blocked = 0
+    if is_blocking(star_x, star_y, star_radius):
+        blocked += (star_radius)**2
+    if is_blocking(planet_x, planet_y, planet_radius):
+        blocked += (planet_radius)**2
+
+    # 밝기 계산: 원래 밝기 1에서 가려진 면적만큼 감소
+    total_brightness = 1 - blocked
+    brightness.append(total_brightness)
+
+# 그래프 출력
+fig, ax = plt.subplots(figsize=(8,4))
+ax.plot(times, brightness, color='orange')
+ax.set_xlabel("시간")
+ax.set_ylabel("광원의 밝기")
+ax.set_title("💫 트랜짓(light curve) 시뮬레이션")
+st.pyplot(fig)
