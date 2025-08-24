@@ -12,7 +12,7 @@ ax.set_aspect("equal")
 ax.axis("off")
 
 # 중심 동그라미 (운량용) - 반지름 0.1, 위치 아래로 이동
-circle = plt.Circle((0.5,0.45),0.13,edgecolor="black",facecolor="white", linewidth=1.5)
+circle = plt.Circle((0.5,0.4),0.13,edgecolor="black",facecolor="white", linewidth=1.5)
 ax.add_patch(circle)
 
 # 일기 기호 위치 → 동그라미 왼쪽으로 떨어뜨림
