@@ -20,7 +20,7 @@ base_x, base_y = 0.28, 0.5
 
 # === 일기 기호 ===
 if weather == "비":
-    ax.plot(base_x, base_y, "o", color="black", markersize=7)
+    ax.plot(base_x, base_y, "o", color="black", markersize=5)
 
 elif weather == "눈":
     size = 0.02
