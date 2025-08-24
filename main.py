@@ -23,7 +23,7 @@ if weather == "비":
     ax.plot(base_x, base_y, "o", color="black", markersize=7)
 
 elif weather == "눈":
-    size = 0.06
+    size = 0.03
     # X자
     ax.plot([base_x-size, base_x+size], [base_y-size, base_y+size], color="black", linewidth=1.5)
     ax.plot([base_x-size, base_x+size], [base_y+size, base_y-size], color="black", linewidth=1.5)
