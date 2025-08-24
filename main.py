@@ -36,13 +36,6 @@ elif weather == "뇌우":
     x = [base_x-0.03, base_x-0.03, base_x+0.03, base_x+0.02, base_x+0.03]
     y = [base_y-0.03, base_y-0.09, base_y-0.03, base_y-0.013, base_y-0.026]
     ax.plot(x, y, color="black", linewidth=1)
-    # 오른쪽 끝 대각선 왼쪽 아래
-    x2 = [x[-1], x[-1]-0.03]
-    y2 = [y[-1], y[-1]-0.03]
-    ax.plot(x2, y2, color="black", linewidth=2)
-    # 화살표: 끝점에서 오른쪽 아래
-    ax.annotate("", xy=(x2[-1]+0.02, y2[-1]-0.02), xytext=(x2[-1], y2[-1]),
-                arrowprops=dict(arrowstyle="->", color="black", lw=2))
 
 elif weather == "안개":
     # 가로줄 세 개
