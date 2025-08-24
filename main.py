@@ -15,7 +15,7 @@ direction = st.selectbox("풍향 선택", ["북", "남", "동", "서", "북동",
 fig, ax = plt.subplots(figsize=(10,10))  # 화면 크게
 ax.set_xlim(0,1)
 ax.set_ylim(-0.2,1.2)  # 남쪽 확장
-ax.set_aspect("equal", adjustable="datalim")
+ax.set_aspect("equal")
 ax.axis("off")
 
 # 중심 동그라미 (운량용)
