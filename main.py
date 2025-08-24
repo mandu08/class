@@ -12,7 +12,7 @@ ax.set_aspect("equal")
 ax.axis("off")
 
 # 중심 동그라미 (운량용)
-circle = plt.Circle((0.5,0.4),0.13,edgecolor="black",facecolor="white", linewidth=1.5)
+circle = plt.Circle((0.5,0.4),0.13,edgecolor="black",facecolor="white", linewidth=1)
 ax.add_patch(circle)
 
 # 일기 기호 기준 좌표
@@ -23,7 +23,7 @@ if weather == "비":
     ax.plot(base_x, base_y, "o", color="black", markersize=7)
 
 elif weather == "눈":
-    size = 0.03
+    size = 0.02
     # X자
     ax.plot([base_x-size, base_x+size], [base_y-size, base_y+size], color="black", linewidth=1)
     ax.plot([base_x-size, base_x+size], [base_y+size, base_y-size], color="black", linewidth=1)
@@ -46,7 +46,7 @@ elif weather == "뇌우":
 elif weather == "안개":
     # 가로줄 세 개
     for dy in [0, -0.03, -0.06]:
-        ax.plot([base_x-0.05, base_x+0.05], [base_y+dy, base_y+dy], color="black", linewidth=1.5)
+        ax.plot([base_x-0.05, base_x+0.05], [base_y+dy, base_y+dy], color="black", linewidth=1)
 
 elif weather == "가랑비":
     # 따옴표 모양 1개
@@ -58,7 +58,7 @@ elif weather == "소나기":
     # 역삼각형 (왼쪽, 오른쪽, 아래)
     ax.plot([base_x-0.03, base_x+0.03, base_x, base_x-0.03],
             [base_y-0.04, base_y-0.04, base_y-0.09, base_y-0.04],
-            color="black", linewidth=1.5)
+            color="black", linewidth=1)
     # 위에 점
     ax.plot(base_x, base_y, "o", color="black", markersize=4.5)
 
