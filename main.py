@@ -12,10 +12,10 @@ weather = st.selectbox("일기 선택", ["비", "눈", "뇌우", "안개", "가�
 direction = st.selectbox("풍향 선택", ["북", "남", "동", "서", "북동", "북서", "남동", "남서"])
 
 # --- Figure 생성 ---
-fig, ax = plt.subplots(figsize=(3,3))  # 화면 크게
+fig, ax = plt.subplots(figsize=(6,6))  # 화면 크게
 ax.set_xlim(-2,2)
 ax.set_ylim(-2,2)  # 남쪽 확장
-ax.set_aspect("equal", adjustable="datalim")
+ax.set_aspect("equal")
 ax.axis("off")
 
 # 중심 동그라미 (운량용)
