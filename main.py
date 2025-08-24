@@ -68,7 +68,7 @@ elif weather == "소낙눈":
             [base_y-0.04, base_y-0.04, base_y-0.09, base_y-0.04],
             color="black", linewidth=1)
     # 위에 점
-    size = 0.01
+    size = 0.015
     # X자
     ax.plot([base_x-size, base_x+size], [base_y-size, base_y+size], color="black", linewidth=1)
     ax.plot([base_x-size, base_x+size], [base_y+size, base_y-size], color="black", linewidth=1)
