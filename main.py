@@ -67,7 +67,16 @@ elif weather == "소낙눈":
     ax.plot([base_x-0.03, base_x+0.03, base_x, base_x-0.03],
             [base_y-0.04, base_y-0.04, base_y-0.09, base_y-0.04],
             color="black", linewidth=1)
+    size = 0.015
+    # X자
+    ax.plot([base_x-size, base_x+size], [base_y-size, base_y+size], color="black", linewidth=1)
+    ax.plot([base_x-size, base_x+size], [base_y+size, base_y-size], color="black", linewidth=1)
+    # X 중점 수평선
+    ax.plot([base_x-size-0.005, base_x+size+0.005], [base_y, base_y], color="black", linewidth=1)
+
+elif weather == "진눈깨비":
     # 위에 점
+    ax.plot(base_x, base_y, "o", color="black", markersize=4.5)
     size = 0.015
     # X자
     ax.plot([base_x-size, base_x+size], [base_y-size, base_y+size], color="black", linewidth=1)
