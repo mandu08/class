@@ -83,5 +83,40 @@ elif weather == "진눈깨비":
     # X 중점 수평선
     ax.plot([base_x-size-0.005, base_x+size+0.005], [base_y-0.05, base_y-0.05], color="black", linewidth=1)
 
+# 풍향 선택
+direction = st.selectbox("풍향 선택", ["북", "남", "동", "서", "북동", "북서", "남동", "남서"])
+
+# 중심 동그라미 좌표와 반지름
+cx, cy = 0.5, 0.4
+r = 0.13
+
+# 풍향에 따라 단위 벡터 설정
+import math
+dir_map = {
+    "북": (0, 1),
+    "남": (0, -1),
+    "동": (1, 0),
+    "서": (-1, 0),
+    "북동": (math.sqrt(2)/2, math.sqrt(2)/2),
+    "북서": (-math.sqrt(2)/2, math.sqrt(2)/2),
+    "남동": (math.sqrt(2)/2, -math.sqrt(2)/2),
+    "남서": (-math.sqrt(2)/2, -math.sqrt(2)/2)
+}
+
+dx, dy = dir_map[direction]
+
+# 시작점: 풍향 방향 끝, 동그라미 바깥으로 반지름만큼 이동
+start_x = cx + dx * r
+start_y = cy + dy * r
+
+# 끝점: 동그라미 중심
+end_x = cx
+end_y = cy
+
+# 선 그리기
+fig, ax = plt.subplots(figsize=(3,3))
+ax.plot([start_x, end_x], [start_y, end_y], color="black", linewidth=1.2)
+
+
 
 st.pyplot(fig)
