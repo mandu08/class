@@ -1,5 +1,6 @@
 import streamlit as st
 import matplotlib.pyplot as plt
+import matplotlib.patches as patches
 
 st.title("기상청 표 일기 기호 (왼쪽 상단 배치)")
 
