@@ -13,8 +13,8 @@ direction = st.selectbox("풍향 선택", ["북", "남", "동", "서", "북동",
 
 # --- Figure 생성 ---
 fig, ax = plt.subplots(figsize=(6,6))  # 화면 크게
-ax.set_xlim(-2,2)
-ax.set_ylim(-2,2)  # 남쪽 확장
+ax.set_xlim(-1.3,1.3)
+ax.set_ylim(-1.3,1.3)  # 남쪽 확장
 ax.set_aspect("equal")
 ax.axis("off")
 
