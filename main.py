@@ -95,7 +95,7 @@ start_x = cx + dx * r
 start_y = cy + dy * r
 
 # 끝점: 테두리에서 바깥쪽으로 일정 길이 연장
-line_length = 0.5
+line_length = 0.9
 end_x = cx + dx * (r + line_length)
 end_y = cy + dy * (r + line_length)
 
