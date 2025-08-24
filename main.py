@@ -3,13 +3,13 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import math
 
-st.title("기상청 표 일기 기호 (왼쪽 상단 배치)")
+st.title("기상청 표 일기 기호")
 
 # --- 일기 선택 ---
 weather = st.selectbox("일기 선택", ["비", "눈", "뇌우", "안개", "가랑비", "소나기", "진눈깨비", "소낙눈"])
 
 # --- 풍향 선택 ---
-direction = st.selectbox("풍향 선택", ["북", "남", "동", "서", "북동", "북서", "남동", "남서"])
+direction = st.selectbox("풍향 선택", ["북", "북동", "동", "남동", "남", "남서", "서", "북서"])
 
 # --- Figure 생성 ---
 fig, ax = plt.subplots(figsize=(6,6))  # 화면 크게
