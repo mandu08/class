@@ -33,9 +33,9 @@ elif weather == "눈":
 
 elif weather == "뇌우":
     # 좌우반전 ㄱ자
-    x = [base_x, base_x-0.05, base_x+0.02, base_x-0.07]
-    y = [base_y, base_y-0.07, base_y-0.07, base_y-0.15]
-    ax.plot(x, y, color="black", linewidth=2)
+    x = [base_x-0.03, base_x-0.03, base_x+0.03, base_x+0.02, base_x+0.03]
+    y = [base_y-0.03, base_y-0.09, base_y-0.03, base_y-0.013, base_y-0.026]
+    ax.plot(x, y, color="black", linewidth=1)
     # 오른쪽 끝 대각선 왼쪽 아래
     x2 = [x[-1], x[-1]-0.03]
     y2 = [y[-1], y[-1]-0.03]
