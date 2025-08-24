@@ -47,7 +47,7 @@ elif weather == "안개":
         ax.plot([base_x-0.03, base_x+0.03], [base_y+dy, base_y+dy], color="black", linewidth=1)
 
 elif weather == "가랑비":
-    ax.plot([base_x+0.015, base_x],
+    ax.plot([base_x+0.013, base_x],
             [base_y-0.01, base_y-0.03], 
             color="black", linewidth=1)
     # 위에 점
