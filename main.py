@@ -16,7 +16,7 @@ circle = plt.Circle((0.5,0.45),0.1,edgecolor="black",facecolor="white", linewidt
 ax.add_patch(circle)
 
 # 일기 기호 위치 → 동그라미 왼쪽으로 떨어뜨림
-base_x, base_y = 0.3, 0.48  # x를 0.3으로 낮춰서 떨어뜨림
+base_x, base_y = 0.3, 0.52  # x를 0.3으로 낮춰서 떨어뜨림
 
 # === 일기 기호 ===
 if weather == "비":
