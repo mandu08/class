@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 st.title("기상청 표 일기 기호 (왼쪽 상단 배치)")
 
-weather = st.selectbox("일기 선택", ["비", "눈", "뇌우", "안개", "가랑비", "소나기"])
+weather = st.selectbox("일기 선택", ["비", "눈", "뇌우", "안개", "가랑비", "소나기", "진눈깨비", "소낙눈"])
 
 fig, ax = plt.subplots(figsize=(3,3))
 ax.set_xlim(0,1)
@@ -61,6 +61,19 @@ elif weather == "소나기":
             color="black", linewidth=1)
     # 위에 점
     ax.plot(base_x, base_y, "o", color="black", markersize=4.5)
+
+elif weather == "소낙눈":
+    # 역삼각형 (왼쪽, 오른쪽, 아래)
+    ax.plot([base_x-0.03, base_x+0.03, base_x, base_x-0.03],
+            [base_y-0.04, base_y-0.04, base_y-0.09, base_y-0.04],
+            color="black", linewidth=1)
+    # 위에 점
+    size = 0.01
+    # X자
+    ax.plot([base_x-size, base_x+size], [base_y-size, base_y+size], color="black", linewidth=1)
+    ax.plot([base_x-size, base_x+size], [base_y+size, base_y-size], color="black", linewidth=1)
+    # X 중점 수평선
+    ax.plot([base_x-size-0.005, base_x+size+0.005], [base_y, base_y], color="black", linewidth=1)
 
 
 st.pyplot(fig)
