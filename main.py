@@ -38,7 +38,7 @@ elif weather == "뇌우":
     ax.plot(x, y, color="black", linewidth=1)
     x = [base_x+0.025, base_x+0.03, base_x+0.0295]
     y = [base_y-0.0825, base_y-0.09, base_y-0.081]
-    ax.plot(x, y, color="black", linewidth=0.7)
+    ax.plot(x, y, color="black", linewidth=0.1)
 
 
 elif weather == "안개":
