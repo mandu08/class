@@ -18,7 +18,9 @@ ax.set_aspect("equal")
 ax.axis("off")
 
 # 중심 동그라미 (운량용)
-circle = plt.Circle((0.5,0.4),0.13,edgecolor="black",facecolor="white", linewidth=1)
+cx, cy = 0.5, 0.4
+r = 0.13
+circle = plt.Circle((cx, cy), r, edgecolor="black", facecolor="white", linewidth=1)
 ax.add_patch(circle)
 
 # 일기 기호 기준 좌표
@@ -30,10 +32,8 @@ if weather == "비":
 
 elif weather == "눈":
     size = 0.02
-    # X자
     ax.plot([base_x-size, base_x+size], [base_y-size, base_y+size], color="black", linewidth=1)
     ax.plot([base_x-size, base_x+size], [base_y+size, base_y-size], color="black", linewidth=1)
-    # X 중점 수평선
     ax.plot([base_x-size-0.005, base_x+size+0.005], [base_y, base_y], color="black", linewidth=1)
 
 elif weather == "뇌우":
@@ -76,12 +76,7 @@ elif weather == "진눈깨비":
     ax.plot([base_x-size, base_x+size], [base_y+size-0.05, base_y-size-0.05], color="black", linewidth=1)
     ax.plot([base_x-size-0.005, base_x+size+0.005], [base_y-0.05, base_y-0.05], color="black", linewidth=1)
 
-# === 풍향 직선 추가 ===
-# 중심 좌표와 반지름
-cx, cy = 0.5, 0.4
-r = 0.13
-
-# 풍향 단위 벡터
+# === 풍향 직선 추가 (원의 테두리에서 바깥으로) ===
 dir_map = {
     "북": (0, 1),
     "남": (0, -1),
@@ -95,13 +90,14 @@ dir_map = {
 
 dx, dy = dir_map[direction]
 
-# 시작점: 바깥 테두리
+# 시작점: 원 테두리
 start_x = cx + dx * r
 start_y = cy + dy * r
 
-# 끝점: 중심
-end_x = cx
-end_y = cy
+# 끝점: 테두리에서 바깥쪽으로 일정 길이 연장
+line_length = 0.1
+end_x = cx + dx * (r + line_length)
+end_y = cy + dy * (r + line_length)
 
 ax.plot([start_x, end_x], [start_y, end_y], color="black", linewidth=1.2)
 
