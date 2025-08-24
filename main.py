@@ -17,7 +17,7 @@ circle = plt.Circle((0.5,0.4),0.13,edgecolor="black",facecolor="white", linewidt
 ax.add_patch(circle)
 
 # 일기 기호 기준 좌표
-base_x, base_y = 0.28, 0.47
+base_x, base_y = 0.2, 0.5
 
 # === 일기 기호 ===
 if weather == "비":
