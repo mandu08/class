@@ -49,10 +49,13 @@ elif weather == "안개":
         ax.plot([base_x-0.03, base_x+0.03], [base_y+dy, base_y+dy], color="black", linewidth=1)
 
 elif weather == "가랑비":
-    # 따옴표 모양 1개
-    ax.plot([base_x, base_x-0.05],
-            [base_y, base_y-0.1],
-            color="black", linewidth=1.5)
+    # 쉼표 모양 1개
+    # 호
+    arc = patches.Arc((base_x, base_y), width=0.06, height=0.06, angle=0, theta1=0, theta2=270,
+                      color="black", linewidth=1.5)
+    ax.add_patch(arc)
+    # 아래쪽 직선
+    ax.plot([base_x, base_x], [base_y-0.03, base_y-0.08], color="black", linewidth=1.5)
 
 elif weather == "소나기":
     # 역삼각형 (왼쪽, 오른쪽, 아래)
