@@ -56,7 +56,7 @@ elif weather == "가랑비":
 
 elif weather == "소나기":
     # 역삼각형 (왼쪽, 오른쪽, 아래)
-    ax.plot([base_x-0.03, base_x+0.03, base_x-0.03, base_x+0.03],
+    ax.plot([base_x-0.03, base_x+0.03, base_x-0.03, base_x+0.01],
             [base_y-0.06, base_y-0.06, base_y-0.06, base_y-0.1],
             color="black", linewidth=1.5)
     # 위에 점
