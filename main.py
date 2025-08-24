@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 st.title("기상청 표 일기 기호 (왼쪽 상단 배치)")
 
-weather = st.selectbox("일기 선택", ["비", "뇌우", "가랑비"])
+weather = st.selectbox("일기 선택", ["비", "눈", "뇌우", "안개", "가랑비", "소나기"])
 
 fig, ax = plt.subplots(figsize=(3,3))
 ax.set_xlim(0,1)
@@ -11,29 +11,53 @@ ax.set_ylim(0,1)
 ax.set_aspect("equal")
 ax.axis("off")
 
-# 중심 동그라미 (운량용) - 반지름 0.1, 위치 아래로 이동
+# 중심 동그라미 (운량용)
 circle = plt.Circle((0.5,0.4),0.13,edgecolor="black",facecolor="white", linewidth=1.5)
 ax.add_patch(circle)
 
-# 일기 기호 위치 → 동그라미 왼쪽으로 떨어뜨림
-base_x, base_y = 0.28, 0.5  # x를 0.3으로 낮춰서 떨어뜨림
+# 일기 기호 기준 좌표
+base_x, base_y = 0.28, 0.5
 
 # === 일기 기호 ===
 if weather == "비":
-    # 점 하나
     ax.plot(base_x, base_y, "o", color="black", markersize=8)
 
+elif weather == "눈":
+    size = 0.06
+    # X자
+    ax.plot([base_x-size, base_x+size], [base_y-size, base_y+size], color="black", linewidth=1.5)
+    ax.plot([base_x-size, base_x+size], [base_y+size, base_y-size], color="black", linewidth=1.5)
+    # X 중점 수평선
+    ax.plot([base_x-size, base_x+size], [base_y, base_y], color="black", linewidth=1.5)
+
 elif weather == "뇌우":
-    # 번개 지그재그
-    x = [base_x, base_x+0.05, base_x-0.02, base_x+0.07]
+    # 좌우반전 ㄱ자
+    x = [base_x, base_x-0.05, base_x+0.02, base_x-0.07]
     y = [base_y, base_y-0.07, base_y-0.07, base_y-0.15]
     ax.plot(x, y, color="black", linewidth=2)
+    # 오른쪽 끝 대각선 왼쪽 아래
+    x2 = [x[-1], x[-1]-0.03]
+    y2 = [y[-1], y[-1]-0.03]
+    ax.plot(x2, y2, color="black", linewidth=2)
+    # 화살표: 끝점에서 오른쪽 아래
+    ax.annotate("", xy=(x2[-1]+0.02, y2[-1]-0.02), xytext=(x2[-1], y2[-1]),
+                arrowprops=dict(arrowstyle="->", color="black", lw=2))
+
+elif weather == "안개":
+    # 가로줄 세 개
+    for dy in [0, -0.03, -0.06]:
+        ax.plot([base_x-0.05, base_x+0.05], [base_y+dy, base_y+dy], color="black", linewidth=1.5)
 
 elif weather == "가랑비":
-    # 짧은 대각선 3개
-    for dx in [0.0, 0.05, 0.1]:
-        ax.plot([base_x+dx, base_x+dx-0.05],
-                [base_y, base_y-0.1],
-                color="black", linewidth=1.5)
+    # 따옴표 모양 1개
+    ax.plot([base_x, base_x-0.05],
+            [base_y, base_y-0.1],
+            color="black", linewidth=1.5)
+
+elif weather == "소나기":
+    # 역삼각형
+    ax.plot([base_x-0.03, base_x+0.03, base_x], [base_y-0.06, base_y-0.06, base_y-0.12], color="black", linewidth=1.5)
+    # 위에 점
+    ax.plot(base_x, base_y, "o", color="black", markersize=5)
 
 st.pyplot(fig)
