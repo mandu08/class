@@ -28,7 +28,7 @@ elif weather == "눈":
     ax.plot([base_x-size, base_x+size], [base_y-size, base_y+size], color="black", linewidth=1.3)
     ax.plot([base_x-size, base_x+size], [base_y+size, base_y-size], color="black", linewidth=1.3)
     # X 중점 수평선
-    ax.plot([base_x-size-0.01, base_x+size+0.01], [base_y, base_y], color="black", linewidth=1.3)
+    ax.plot([base_x-size-0.005, base_x+size+0.005], [base_y, base_y], color="black", linewidth=1.3)
 
 elif weather == "뇌우":
     # 좌우반전 ㄱ자
