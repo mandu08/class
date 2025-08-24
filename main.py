@@ -9,7 +9,7 @@ st.title("기상청 표 일기 기호 (왼쪽 상단 배치)")
 weather = st.selectbox("일기 선택", ["비", "눈", "뇌우", "안개", "가랑비", "소나기", "진눈깨비", "소낙눈"])
 
 # --- 풍향 선택 ---
-direction = st.selectbox("풍향 선택", ["북", "남", "동", "서", "북동", "북서", "남동", "남서"])
+direction = st.selectbox("풍향 선택", ["북", "북동", "동", "남동", "남", "남서", "서", "북서"])
 
 fig, ax = plt.subplots(figsize=(3,3))
 ax.set_xlim(0,1)
@@ -95,7 +95,7 @@ start_x = cx + dx * r
 start_y = cy + dy * r
 
 # 끝점: 테두리에서 바깥쪽으로 일정 길이 연장
-line_length = 0.9
+line_length = 0.3
 end_x = cx + dx * (r + line_length)
 end_y = cy + dy * (r + line_length)
 
