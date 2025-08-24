@@ -46,7 +46,7 @@ elif weather == "뇌우":
 elif weather == "안개":
     # 가로줄 세 개
     for dy in [0, -0.03, -0.06]:
-        ax.plot([base_x-0.05, base_x+0.05], [base_y+dy, base_y+dy], color="black", linewidth=1)
+        ax.plot([base_x-0.03, base_x+0.03], [base_y+dy, base_y+dy], color="black", linewidth=1)
 
 elif weather == "가랑비":
     # 따옴표 모양 1개
