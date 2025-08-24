@@ -60,7 +60,7 @@ elif weather == "소나기":
             [base_y-0.04, base_y-0.04, base_y-0.09, base_y-0.04],
             color="black", linewidth=1.5)
     # 위에 점
-    ax.plot(base_x, base_y, "o", color="black", markersize=4)
+    ax.plot(base_x, base_y, "o", color="black", markersize=4.5)
 
 
 st.pyplot(fig)
