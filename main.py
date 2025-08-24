@@ -11,12 +11,12 @@ ax.set_ylim(0,1)
 ax.set_aspect("equal")
 ax.axis("off")
 
-# 중심 동그라미 (운량용) - 크기 축소 (0.2 → 더 작게)
-circle = plt.Circle((0.5,0.5),0.2,edgecolor="black",facecolor="white", linewidth=1.5)
+# 중심 동그라미 (운량용) - 반지름 0.1, 위치 아래로 이동
+circle = plt.Circle((0.5,0.45),0.1,edgecolor="black",facecolor="white", linewidth=1.5)
 ax.add_patch(circle)
 
-# 좌상단 기준 위치 (대략 10시 방향)
-base_x, base_y = 0.25, 0.75
+# 좌상단 기준 위치 → 9시 방향 (동그라미 왼쪽)
+base_x, base_y = 0.4, 0.45
 
 # === 일기 기호 ===
 if weather == "비":
