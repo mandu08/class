@@ -79,10 +79,10 @@ elif weather == "진눈깨비":
     ax.plot(base_x, base_y, "o", color="black", markersize=4.5)
     size = 0.015
     # X자
-    ax.plot([base_x-size, base_x+size], [base_y-size-0.06, base_y+size-0.06], color="black", linewidth=1)
-    ax.plot([base_x-size, base_x+size], [base_y+size-0.06, base_y-size-0.06], color="black", linewidth=1)
+    ax.plot([base_x-size, base_x+size], [base_y-size-0.05, base_y+size-0.05], color="black", linewidth=1)
+    ax.plot([base_x-size, base_x+size], [base_y+size-0.05, base_y-size-0.05], color="black", linewidth=1)
     # X 중점 수평선
-    ax.plot([base_x-size-0.005, base_x+size+0.005], [base_y-0.06, base_y-0.06], color="black", linewidth=1)
+    ax.plot([base_x-size-0.005, base_x+size+0.005], [base_y-0.05, base_y-0.05], color="black", linewidth=1)
 
 
 st.pyplot(fig)
