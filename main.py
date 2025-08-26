@@ -12,7 +12,7 @@ weather = st.selectbox("일기 선택", ["비", "눈", "뇌우", "안개", "가�
 direction = st.selectbox("풍향 선택", ["북", "북동", "동", "남동", "남", "남서", "서", "북서"])
 
 # --- 기온 입력 ---
-temperature = st.number_input("기온 입력 (℃)", value=20.0, step=0.1)
+temperature = st.number_input("기온 입력 (℃)", value=20.0, step=1)
 
 # --- Figure 생성 ---
 fig, ax = plt.subplots(figsize=(6,6))  # 화면 크게
@@ -106,6 +106,6 @@ end_y = cy + dy * (r + line_length)
 ax.plot([start_x, end_x], [start_y, end_y], color="black", linewidth=1.2)
 
 # === 기온 표시 (일기 기호 위쪽) ===
-ax.text(base_x, base_y+0.1, f"{temperature:.1f}", fontsize=8, ha="center", va="bottom")
+ax.text(base_x, base_y+0.01, f"{temperature:.1f}", fontsize=8, ha="center", va="bottom")
 
 st.pyplot(fig)
