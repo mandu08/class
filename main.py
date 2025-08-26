@@ -107,6 +107,6 @@ end_y = cy + dy * (r + line_length)
 ax.plot([start_x, end_x], [start_y, end_y], color="black", linewidth=1.2)
 
 # === 기온 표시 (일기 기호 위쪽) ===
-ax.text(base_x, base_y+0.01, f"{temperature:.1f}", fontsize=8, ha="center", va="bottom")
+ax.text(base_x, base_y+0.05, f"{int(temperature)}", fontsize=8, ha="center", va="bottom")
 
 st.pyplot(fig)
