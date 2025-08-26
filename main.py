@@ -12,7 +12,7 @@ weather = st.selectbox("일기 선택", ["비", "눈", "뇌우", "안개", "가�
 direction = st.selectbox("풍향 선택", ["북", "북동", "동", "남동", "남", "남서", "서", "북서"])
 
 # --- 기온 입력 ---
-temperature = st.number_input("기온 입력 (℃)", value=20.0, step=1)
+temperature = st.number_input("기온 입력 (℃)", value=20, step=1)
 
 # --- Figure 생성 ---
 fig, ax = plt.subplots(figsize=(6,6))  # 화면 크게
