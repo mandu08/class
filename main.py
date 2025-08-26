@@ -13,6 +13,7 @@ direction = st.selectbox("풍향 선택", ["북", "북동", "동", "남동", "�
 
 # --- 기온 입력 ---
 temperature = st.number_input("기온 입력 (℃)", value=20, step=1)
+temperature = int(temperature)
 
 # --- Figure 생성 ---
 fig, ax = plt.subplots(figsize=(6,6))  # 화면 크게
