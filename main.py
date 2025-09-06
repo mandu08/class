@@ -213,10 +213,13 @@ elif wind_speed == 27:
 ax.text(base_x, base_y+0.05, f"{int(temperature)}", fontsize=8, ha="center", va="bottom")
 
 # --- 기압 변환 및 표시 ---
-pressure_int = int(round(pressure))  # 정수로 변환
-if pressure_int >= 1000:
+if pressure >= 1000:
+    pressure_slice = str(pressure)[:5]
+    pressure_int = float(pressure_slice)  # 정수로 변환
     pressure_transformed = pressure_int - 1000
 else:
+    pressure_slice = str(pressure)[:4]
+    pressure_int = float(pressure_slice)
     pressure_transformed = pressure_int - 900
 pressure_transformed *= 10
 
