@@ -133,20 +133,20 @@ def draw_perp_centered(point, length):
             color="black", linewidth=1.2)
 
 # flag drawing at end: triangular flag that sticks to the RIGHT side of the line tip
+# flag drawing at end: triangular flag that sticks ABOVE the line tip
 def draw_flag_at_end(end_pt, base_along, width):
-    # end_pt: tip point (end_x,end_y)
     ex, ey = end_pt
     # point back along the line to create flag base
     back_x = ex - dx * base_along
     back_y = ey - dy * base_along
-    # third point offset to the right (perp)
-    right_x = back_x + perp_x * width
-    right_y = back_y + perp_y * width
-    # triangle points: end_pt (tip at outside), back point, right offset
-    tri = patches.Polygon([[ex, ey], [back_x, back_y], [right_x, right_y]],
+    # "upward" relative to line (rotate 90° CCW)
+    up_x, up_y = -dy, dx
+    # third point offset upward
+    up_point_x = back_x + up_x * width
+    up_point_y = back_y + up_y * width
+    tri = patches.Polygon([[ex, ey], [back_x, back_y], [up_point_x, up_point_y]],
                           closed=True, edgecolor="black", facecolor="black", linewidth=1)
     ax.add_patch(tri)
-
 # Now implement wind_speed cases
 if wind_speed == 0:
     # no additional drawing (no main line either)
