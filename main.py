@@ -169,7 +169,7 @@ elif wind_speed == 5:
 elif wind_speed == 7:
     # combine 2 and 5: small perp (t=0.85) + long perp (t=0.92)
     p1 = point_at(0.85)
-    p2 = point_at(0.92)
+    p2 = point_at(1)
     draw_perp_from(p1, length=0.06)
     draw_perp_from(p2, length=0.12)
 
@@ -177,17 +177,17 @@ elif wind_speed == 10:
     # 5's shape plus at 2's position add 5-sized perpendicular
     # That is: long at t=0.92 (like 5) AND another long at t=0.85
     p1 = point_at(0.85)
-    p2 = point_at(0.92)
+    p2 = point_at(1)
     draw_perp_from(p1, length=0.12)  # add long at 2's position
     draw_perp_from(p2, length=0.12)  # original long
 
 elif wind_speed == 12:
     # 10's shape plus an extra long perpendicular slightly before the 2-position
     # we add third at t=0.80
-    p_pre = point_at(0.80)
+    p_pre = point_at(0.7)
     p1 = point_at(0.85)
-    p2 = point_at(0.92)
-    draw_perp_from(p_pre, length=0.12)
+    p2 = point_at(1)
+    draw_perp_from(p_pre, length=0.06)
     draw_perp_from(p1, length=0.12)
     draw_perp_from(p2, length=0.12)
 
@@ -200,7 +200,7 @@ elif wind_speed == 27:
     # flag at end + small perpendicular like in 2 (t=0.85)
     end_pt = (end_x, end_y)
     draw_flag_at_end(end_pt, base_along=0.08, width=0.06)
-    p = point_at(0.85)
+    p = point_at(0.8)
     draw_perp_from(p, length=0.06)
 
 # === 기온 표시 (일기 기호 위쪽) ===
