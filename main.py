@@ -179,7 +179,7 @@ def draw_flag_at_end(end_pt, base_along, width):
 # --- 풍속 장식 ---
 if wind_speed == 0 and cloudiness == 0:
     circle3 = plt.Circle((cx, cy), r2, edgecolor="black", facecolor="black", linewidth=1)
-    ax.add_patch(circle)
+    ax.add_patch(circle3)
 
 if wind_speed != 0:
     ax.plot([start_x, end_x], [start_y, end_y], color="black", linewidth=1.2)
