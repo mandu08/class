@@ -216,7 +216,7 @@ ax.text(base_x, base_y+0.05, f"{int(temperature)}", fontsize=8, ha="center", va=
 
 # --- 기압 변환 및 표시 ---
 
-ax.text(base_x, base_y+0.25, f"{pressure_transformed:.0f}", fontsize=12, ha="center")
+ax.text(cx + r + 0.05, cy, f"{pressure_transformed:.0f}", fontsize=8, ha="left", va="center")
 
 
 st.pyplot(fig)
