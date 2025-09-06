@@ -54,7 +54,6 @@ elif cloudiness == 5:
     wedge2 = patches.Wedge((cx, cy), r, 270, 360, facecolor="black", edgecolor="none")
     ax.add_patch(wedge1)
     ax.add_patch(wedge2)
-    ax.plot([cx, cx], [cy - r, cy + r], color="white", linewidth=0.5)
 
 elif cloudiness == 6:
     wedge1 = patches.Wedge((cx, cy), r, 0, 90, facecolor="black", edgecolor="none")
