@@ -15,26 +15,78 @@ direction = st.selectbox("풍향 선택", ["북", "북동", "동", "남동", "�
 temperature = st.number_input("기온 입력 (℃)", value=20, step=1)
 temperature = int(temperature)
 
-# --- 풍속 선택 (추가) ---
+# --- 풍속 선택 ---
 wind_speed = st.selectbox("풍속 선택", [0,1,2,5,7,10,12,25,27])
 
+# --- 운량 선택 ---
+cloudiness = st.slider("운량 선택 (0~10)", 0, 10, 0, step=1)
+
 # --- Figure 생성 ---
-fig, ax = plt.subplots(figsize=(6,6)) # 화면 크게
+fig, ax = plt.subplots(figsize=(6,6))
 ax.set_xlim(-0.3,1.3)
-ax.set_ylim(-1.3,1.3)  # 남쪽 확장
+ax.set_ylim(-1.3,1.3)
 ax.set_aspect("equal")
 ax.axis("off")
 
-# 중심 동그라미 (운량용)
+# 중심 동그라미 좌표
 cx, cy = 0.5, 0.4
 r = 0.13
+
+# 기본 동그라미
 circle = plt.Circle((cx, cy), r, edgecolor="black", facecolor="white", linewidth=1)
 ax.add_patch(circle)
 
-# 일기 기호 기준 좌표
+# --- 운량별 내부 모양 ---
+if cloudiness == 1:
+    ax.plot([cx, cx], [cy - r*0.7, cy + r*0.7], color="black", linewidth=1.2)
+
+elif cloudiness in [2,3]:
+    wedge = patches.Wedge((cx, cy), r, 0, 90, facecolor="black", edgecolor="none")
+    ax.add_patch(wedge)
+
+elif cloudiness == 4:
+    wedge = patches.Wedge((cx, cy), r, 0, 90, facecolor="black", edgecolor="none")
+    ax.add_patch(wedge)
+    ax.plot([cx, cx], [cy - r, cy + r], color="black", linewidth=1.2)
+
+elif cloudiness == 5:
+    wedge1 = patches.Wedge((cx, cy), r, 0, 90, facecolor="black", edgecolor="none")
+    wedge2 = patches.Wedge((cx, cy), r, 90, 180, facecolor="black", edgecolor="none")
+    ax.add_patch(wedge1)
+    ax.add_patch(wedge2)
+    ax.plot([cx, cx], [cy - r, cy + r], color="white", linewidth=0.5)
+
+elif cloudiness == 6:
+    wedge1 = patches.Wedge((cx, cy), r, 0, 90, facecolor="black", edgecolor="none")
+    wedge2 = patches.Wedge((cx, cy), r, 90, 180, facecolor="black", edgecolor="none")
+    ax.add_patch(wedge1)
+    ax.add_patch(wedge2)
+    ax.plot([cx, cx], [cy - r, cy + r], color="white", linewidth=0.5)
+    ax.plot([cx - r, cx + r], [cy, cy], color="black", linewidth=1.2)
+
+elif cloudiness in [7,8]:
+    wedge1 = patches.Wedge((cx, cy), r, 0, 90, facecolor="black", edgecolor="none")
+    wedge2 = patches.Wedge((cx, cy), r, 90, 180, facecolor="black", edgecolor="none")
+    wedge3 = patches.Wedge((cx, cy), r, 180, 270, facecolor="black", edgecolor="none")
+    ax.add_patch(wedge1)
+    ax.add_patch(wedge2)
+    ax.add_patch(wedge3)
+    ax.plot([cx, cx], [cy - r, cy + r], color="white", linewidth=0.5)
+    ax.plot([cx - r, cx + r], [cy, cy], color="black", linewidth=1.2)
+
+elif cloudiness == 9:
+    circle2 = plt.Circle((cx, cy), r, edgecolor="black", facecolor="black", linewidth=1)
+    ax.add_patch(circle2)
+    ax.plot([cx, cx], [cy - r, cy + r], color="white", linewidth=0.5)
+
+elif cloudiness == 10:
+    circle2 = plt.Circle((cx, cy), r, edgecolor="black", facecolor="black", linewidth=1)
+    ax.add_patch(circle2)
+
+# --- 일기 기호 기준 좌표 ---
 base_x, base_y = 0.24, 0.5
 
-# === 일기 기호 === (원본 그대로)
+# === 일기 기호 ===
 if weather == "비":
     ax.plot(base_x, base_y, "o", color="black", markersize=5)
 
@@ -84,7 +136,7 @@ elif weather == "진눈깨비":
     ax.plot([base_x-size, base_x+size], [base_y+size-0.05, base_y-size-0.05], color="black", linewidth=1)
     ax.plot([base_x-size-0.005, base_x+size+0.005], [base_y-0.05, base_y-0.05], color="black", linewidth=1)
 
-# === 풍향 직선 추가 (원의 테두리에서 바깥으로) ===
+# --- 풍향 직선 ---
 dir_map = {
     "북": (0, 1),
     "남": (0, -1),
@@ -97,129 +149,62 @@ dir_map = {
 }
 
 dx, dy = dir_map[direction]
-
-# 시작점: 원 테두리
 start_x = cx + dx * r
 start_y = cy + dy * r
-
-# 끝점: 테두리에서 바깥쪽으로 일정 길이 연장
 line_length = 0.5
 end_x = cx + dx * (r + line_length)
 end_y = cy + dy * (r + line_length)
 
-# --------------- 풍속에 따른 장식 그리기 ---------------
-# helper: point along line at fraction t (0=start at circle edge, 1=end)
+# --- 보조 함수 ---
+perp_x, perp_y = dy, -dx
+
 def point_at(t):
     return (start_x + (end_x - start_x) * t, start_y + (end_y - start_y) * t)
 
-# perpendicular "right" relative to (dx,dy) when looking outward from center:
-# right_perp = (dy, -dx)
-perp_x, perp_y = dy, -dx  # already unit if (dx,dy) is unit
-
-# draw main line for speeds != 0 and for speed==1 at least the main line
-if wind_speed != 0:
-    ax.plot([start_x, end_x], [start_y, end_y], color="black", linewidth=1.2)
-
-# small perpendicular (single-sided) drawn from base point towards right_perp
 def draw_perp_from(point, length):
     px, py = point
     ax.plot([px, px + perp_x * length], [py, py + perp_y * length], color="black", linewidth=1.2)
 
-# centered small perpendicular (if needed) - not used per spec but available
-def draw_perp_centered(point, length):
-    px, py = point
-    ax.plot([px - perp_x*length/2, px + perp_x*length/2],
-            [py - perp_y*length/2, py + perp_y*length/2],
-            color="black", linewidth=1.2)
-
 def draw_flag_at_end(end_pt, base_along, width):
-    """
-    직선 끝점이 직각이 되도록 직각삼각형 깃발 그림
-    end_pt: 직선 끝점 (end_x, end_y)
-    base_along: 직각에서 직선 끝으로 향하는 한 변 길이
-    width: 직각삼각형 밑변 길이 (직선에 수직)
-    """
     ex, ey = end_pt
-
-    # 직선 끝점이 직각 꼭짓점
-    right_angle_x = ex
-    right_angle_y = ey
-
-    # 직각에서 밑변 끝점 계산: 직선 방향으로 후퇴
-    base_x = ex - dx * base_along
-    base_y = ey - dy * base_along
-
-    # 직각에서 밑변의 다른 끝점 계산: 직선 수직 방향으로 이동
+    right_angle_x, right_angle_y = ex, ey
+    base_x_line = ex - dx * base_along
+    base_y_line = ey - dy * base_along
     perp_end_x = ex + perp_x * width
     perp_end_y = ey + perp_y * width
-
-    # 삼각형 추가 (직각 꼭짓점이 직선 끝점)
     tri = patches.Polygon([[right_angle_x, right_angle_y],
-                           [base_x, base_y],
+                           [base_x_line, base_y_line],
                            [perp_end_x, perp_end_y]],
                           closed=True, edgecolor="black", facecolor="black", linewidth=1)
     ax.add_patch(tri)
 
+# --- 풍속 장식 ---
+if wind_speed != 0:
+    ax.plot([start_x, end_x], [start_y, end_y], color="black", linewidth=1.2)
 
-
-    
-# Now implement wind_speed cases
-if wind_speed == 0:
-    # no additional drawing (no main line either)
-    pass
-
-elif wind_speed == 1:
-    # just the main line (already drawn)
-    pass
-
-elif wind_speed == 2:
-    # a short perpendicular a little before the end (e.g., t=0.85), pointing to right
+if wind_speed == 2:
     p = point_at(0.85)
-    draw_perp_from(p, length=0.06)   # small length
-
+    draw_perp_from(p, 0.06)
 elif wind_speed == 5:
-    # longer perpendicular near the end (t=0.92)
     p = point_at(1)
-    draw_perp_from(p, length=0.12)   # longer
-
+    draw_perp_from(p, 0.12)
 elif wind_speed == 7:
-    # combine 2 and 5: small perp (t=0.85) + long perp (t=0.92)
-    p1 = point_at(0.85)
-    p2 = point_at(1)
-    draw_perp_from(p1, length=0.06)
-    draw_perp_from(p2, length=0.12)
-
+    draw_perp_from(point_at(0.85), 0.06)
+    draw_perp_from(point_at(1), 0.12)
 elif wind_speed == 10:
-    # 5's shape plus at 2's position add 5-sized perpendicular
-    # That is: long at t=0.92 (like 5) AND another long at t=0.85
-    p1 = point_at(0.85)
-    p2 = point_at(1)
-    draw_perp_from(p1, length=0.12)  # add long at 2's position
-    draw_perp_from(p2, length=0.12)  # original long
-
+    draw_perp_from(point_at(0.85), 0.12)
+    draw_perp_from(point_at(1), 0.12)
 elif wind_speed == 12:
-    # 10's shape plus an extra long perpendicular slightly before the 2-position
-    # we add third at t=0.80
-    p_pre = point_at(0.7)
-    p1 = point_at(0.85)
-    p2 = point_at(1)
-    draw_perp_from(p_pre, length=0.06)
-    draw_perp_from(p1, length=0.12)
-    draw_perp_from(p2, length=0.12)
-
+    draw_perp_from(point_at(0.7), 0.06)
+    draw_perp_from(point_at(0.85), 0.12)
+    draw_perp_from(point_at(1), 0.12)
 elif wind_speed == 25:
-    # main line + flag at the very end
-    end_pt = (end_x, end_y)
-    draw_flag_at_end(end_pt, base_along=0.08, width=0.1)
-
+    draw_flag_at_end((end_x, end_y), 0.08, 0.1)
 elif wind_speed == 27:
-    # flag at end + small perpendicular like in 2 (t=0.85)
-    end_pt = (end_x, end_y)
-    draw_flag_at_end(end_pt, base_along=0.08, width=0.1)
-    p = point_at(0.8)
-    draw_perp_from(p, length=0.06)
+    draw_flag_at_end((end_x, end_y), 0.08, 0.1)
+    draw_perp_from(point_at(0.8), 0.06)
 
-# === 기온 표시 (일기 기호 위쪽) ===
+# --- 기온 표시 ---
 ax.text(base_x, base_y+0.05, f"{int(temperature)}", fontsize=8, ha="center", va="bottom")
 
 st.pyplot(fig)
