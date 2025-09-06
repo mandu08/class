@@ -136,29 +136,30 @@ def draw_flag_at_end(end_pt, base_along, width):
     """
     직선 끝점이 직각이 되도록 직각삼각형 깃발 그림
     end_pt: 직선 끝점 (end_x, end_y)
-    base_along: 직선 반대 방향으로 깃발 높이 (직각에서 밑변까지 거리)
-    width: 직각삼각형 밑변 길이
+    base_along: 직각에서 직선 끝으로 향하는 한 변 길이
+    width: 직각삼각형 밑변 길이 (직선에 수직)
     """
     ex, ey = end_pt
 
-    # 직선 끝점이 직각 꼭짓점이 되도록 설정
+    # 직선 끝점이 직각 꼭짓점
     right_angle_x = ex
     right_angle_y = ey
 
-    # 직선 방향으로 삼각형 밑변 끝점 계산
+    # 직각에서 밑변 끝점 계산: 직선 방향으로 후퇴
     base_x = ex - dx * base_along
     base_y = ey - dy * base_along
 
-    # 직선에 수직으로 밑변의 다른 끝점 계산 (perp_x, perp_y 사용)
-    perp_end_x = base_x + perp_x * width
-    perp_end_y = base_y + perp_y * width
+    # 직각에서 밑변의 다른 끝점 계산: 직선 수직 방향으로 이동
+    perp_end_x = ex + perp_x * width
+    perp_end_y = ey + perp_y * width
 
-    # 삼각형 추가 (직각 꼭짓점이 끝점)
+    # 삼각형 추가 (직각 꼭짓점이 직선 끝점)
     tri = patches.Polygon([[right_angle_x, right_angle_y],
                            [base_x, base_y],
                            [perp_end_x, perp_end_y]],
                           closed=True, edgecolor="black", facecolor="black", linewidth=1)
     ax.add_patch(tri)
+
 
 
     
