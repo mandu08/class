@@ -47,7 +47,7 @@ elif cloudiness in [2,3]:
 elif cloudiness == 4:
     wedge = patches.Wedge((cx, cy), r, 0, 90, facecolor="black", edgecolor="none")
     ax.add_patch(wedge)
-    ax.plot([cx, cx], [cy - r, cy + r], color="black", linewidth=1.2)
+    ax.plot([cx, cx], [cy - r, cy + r], color="black", linewidth=1)
 
 elif cloudiness == 5:
     wedge1 = patches.Wedge((cx, cy), r, 0, 90, facecolor="black", edgecolor="none")
@@ -62,7 +62,7 @@ elif cloudiness == 6:
     ax.add_patch(wedge1)
     ax.add_patch(wedge2)
     ax.plot([cx, cx], [cy - r, cy + r], color="white", linewidth=0.5)
-    ax.plot([cx - r, cx + r], [cy, cy], color="black", linewidth=1.2)
+    ax.plot([cx - r, cx + r], [cy, cy], color="black", linewidth=1)
 
 elif cloudiness in [7,8]:
     wedge1 = patches.Wedge((cx, cy), r, 0, 90, facecolor="black", edgecolor="none")
@@ -71,8 +71,7 @@ elif cloudiness in [7,8]:
     ax.add_patch(wedge1)
     ax.add_patch(wedge2)
     ax.add_patch(wedge3)
-    ax.plot([cx, cx], [cy - r, cy + r], color="white", linewidth=0.5)
-    ax.plot([cx - r, cx + r], [cy, cy], color="black", linewidth=1.2)
+    ax.plot([cx - r, cx + r], [cy, cy], color="black", linewidth=1.)
 
 elif cloudiness == 9:
     circle2 = plt.Circle((cx, cy), r, edgecolor="black", facecolor="black", linewidth=1)
