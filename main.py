@@ -21,6 +21,9 @@ wind_speed = st.selectbox("풍속 선택", [0,1,2,5,7,10,12,25,27])
 # --- 운량 선택 ---
 cloudiness = st.slider("운량 선택 (0~10)", 0, 10, 0, step=1)
 
+# --- 기압 입력 (hPa 단위, 소수점 1자리까지) ---
+pressure = st.number_input("기압 입력 (hPa)", value=1013.2, step=0.1)
+
 # --- Figure 생성 ---
 fig, ax = plt.subplots(figsize=(6,6))
 ax.set_xlim(-0.3,1.3)
@@ -208,5 +211,15 @@ elif wind_speed == 27:
 
 # --- 기온 표시 ---
 ax.text(base_x, base_y+0.05, f"{int(temperature)}", fontsize=8, ha="center", va="bottom")
+
+# --- 기압 변환 및 표시 ---
+pressure_int = int(round(pressure))  # 정수로 변환
+if pressure_int >= 1000:
+    pressure_transformed = pressure_int - 1000
+else:
+    pressure_transformed = pressure_int - 900
+pressure_transformed *= 10
+
+ax.text(cx + r + 0.05, cy, f"{pressure_transformed}", fontsize=8, ha="left", va="center")
 
 st.pyplot(fig)
