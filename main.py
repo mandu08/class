@@ -132,32 +132,18 @@ def draw_perp_centered(point, length):
             [py - perp_y*length/2, py + perp_y*length/2],
             color="black", linewidth=1.2)
 
-# flag drawing at end: upside-down triangle with base attached to line end
-def draw_flag_at_end(end_pt, base_length, height):
+# flag drawing at end: triangular flag that sticks to the RIGHT side of the line tip
+def draw_flag_at_end(end_pt, base_along, width):
+    # end_pt: tip point (end_x,end_y)
     ex, ey = end_pt
-    # 단위 벡터 (풍향 방향)
-    length = math.sqrt(dx**2 + dy**2)
-    ux, uy = dx/length, dy/length
-    
-    # 직선에 수직 방향 벡터
-    perp_x, perp_y = -uy, ux
-    
-    # 밑변 중심 = 직선 끝점
-    base_cx, base_cy = ex, ey
-    
-    # 밑변 양 끝 좌표
-    base1_x = base_cx + perp_x * (base_length/2)
-    base1_y = base_cy + perp_y * (base_length/2)
-    base2_x = base_cx - perp_x * (base_length/2)
-    base2_y = base_cy - perp_y * (base_length/2)
-    
-    # 삼각형 꼭짓점 (밑변에서 직선 방향으로 height만큼 나간 곳)
-    tip_x = base_cx + ux * height
-    tip_y = base_cy + uy * height
-    
-    tri = patches.Polygon([[base1_x, base1_y],
-                           [base2_x, base2_y],
-                           [tip_x, tip_y]],
+    # point back along the line to create flag base
+    back_x = ex - dx * base_along
+    back_y = ey - dy * base_along
+    # third point offset to the right (perp)
+    right_x = back_x + perp_x * width
+    right_y = back_y + perp_y * width
+    # triangle points: end_pt (tip at outside), back point, right offset
+    tri = patches.Polygon([[ex, ey], [back_x, back_y], [right_x, right_y]],
                           closed=True, edgecolor="black", facecolor="black", linewidth=1)
     ax.add_patch(tri)
 
