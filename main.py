@@ -163,7 +163,7 @@ elif wind_speed == 2:
 
 elif wind_speed == 5:
     # longer perpendicular near the end (t=0.92)
-    p = point_at(0.92)
+    p = point_at(1)
     draw_perp_from(p, length=0.12)   # longer
 
 elif wind_speed == 7:
