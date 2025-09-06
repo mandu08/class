@@ -215,6 +215,9 @@ elif wind_speed == 27:
 ax.text(base_x, base_y+0.05, f"{int(temperature)}", fontsize=8, ha="center", va="bottom")
 
 # --- 기압 변환 및 표시 ---
-ax.text(base_x, base_y+0.25, f"{pressure_transformed:.0f}", fontsize=12, ha="center")
+if pressure != 1000:
+    ax.text(base_x, base_y+0.25, f"{pressure_transformed:.0f}", fontsize=12, ha="center")
+else:
+    ax.text(base_x, base_y+0.25, f"0", fontsize=12, ha="center")
 
 st.pyplot(fig)
