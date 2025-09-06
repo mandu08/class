@@ -180,7 +180,7 @@ def draw_flag_at_end(end_pt, base_along, width):
 if wind_speed != 0:
     ax.plot([start_x, end_x], [start_y, end_y], color="black", linewidth=1.2)
 elif wind_speed == 0:
-    circle3 = plt.Circle((cx, cy), r-0.6, edgecolor="black", facecolor="black", linewidth=1)
+    circle3 = plt.Circle((cx, cy), r2, edgecolor="black", facecolor="black", linewidth=1)
 
 if wind_speed == 2:
     p = point_at(0.85)
