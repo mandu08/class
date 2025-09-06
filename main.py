@@ -134,18 +134,39 @@ def draw_perp_centered(point, length):
 
 # flag drawing at end: triangular flag that sticks to the RIGHT side of the line tip
 def draw_flag_at_end(end_pt, base_along, width):
-    # end_pt: tip point (end_x,end_y)
+    """
+    직선 끝점이 직각 꼭짓점이 되도록 삼각형 깃발을 그림
+    end_pt: 직선 끝점 (end_x, end_y)
+    base_along: 직선 반대 방향으로 깃발 높이
+    width: 깃발 밑변 길이 (수직 방향)
+    """
+
     ex, ey = end_pt
-    # point back along the line to create flag base
-    back_x = ex - dx * base_along
-    back_y = ey - dy * base_along
-    # third point offset to the right (perp)
-    right_x = back_x + perp_x * width
-    right_y = back_y + perp_y * width
-    # triangle points: end_pt (tip at outside), back point, right offset
-    tri = patches.Polygon([[ex, ey], [back_x, back_y], [right_x, right_y]],
+
+    # 직선 단위 벡터
+    d_len = math.sqrt(dx**2 + dy**2)
+    dx_unit = dx / d_len
+    dy_unit = dy / d_len
+
+    # 직선에 수직 단위 벡터 (오른쪽)
+    px_unit = -dy_unit
+    py_unit = dx_unit
+
+    # 직각 꼭짓점 = 직선 끝점
+    tip_x, tip_y = ex, ey
+
+    # 밑변 두 점: 직선 반대 방향으로 base_along만큼, 좌우로 width/2
+    base1_x = tip_x - dx_unit * base_along + px_unit * (width/2)
+    base1_y = tip_y - dy_unit * base_along + py_unit * (width/2)
+
+    base2_x = tip_x - dx_unit * base_along - px_unit * (width/2)
+    base2_y = tip_y - dy_unit * base_along - py_unit * (width/2)
+
+    # 삼각형 추가
+    tri = patches.Polygon([[tip_x, tip_y], [base1_x, base1_y], [base2_x, base2_y]],
                           closed=True, edgecolor="black", facecolor="black", linewidth=1)
     ax.add_patch(tri)
+
 
     
 # Now implement wind_speed cases
