@@ -31,7 +31,7 @@ ax.axis("off")
 # 중심 동그라미 좌표
 cx, cy = 0.5, 0.4
 r = 0.13
-r2 = 0.05
+r2 = 0.08
 
 # 기본 동그라미
 circle = plt.Circle((cx, cy), r, edgecolor="black", facecolor="white", linewidth=1)
@@ -178,7 +178,7 @@ def draw_flag_at_end(end_pt, base_along, width):
 
 # --- 풍속 장식 ---
 if wind_speed == 0 and cloudiness == 0:
-    circle3 = plt.Circle((cx, cy), r2, edgecolor="black", facecolor="black", linewidth=1)
+    circle3 = plt.Circle((cx, cy), r2, edgecolor="black", facecolor="white", linewidth=1)
     ax.add_patch(circle3)
 
 if wind_speed != 0:
