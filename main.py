@@ -210,12 +210,12 @@ elif wind_speed == 12:
 elif wind_speed == 25:
     # main line + flag at the very end
     end_pt = (end_x, end_y)
-    draw_flag_at_end(end_pt, base_along=0.08, width=0.06)
+    draw_flag_at_end(end_pt, base_along=0.08, width=0.1)
 
 elif wind_speed == 27:
     # flag at end + small perpendicular like in 2 (t=0.85)
     end_pt = (end_x, end_y)
-    draw_flag_at_end(end_pt, base_along=0.08, width=0.06)
+    draw_flag_at_end(end_pt, base_along=0.08, width=0.1)
     p = point_at(0.8)
     draw_perp_from(p, length=0.06)
 
