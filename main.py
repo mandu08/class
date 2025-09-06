@@ -132,21 +132,36 @@ def draw_perp_centered(point, length):
             [py - perp_y*length/2, py + perp_y*length/2],
             color="black", linewidth=1.2)
 
-# flag drawing at end: triangular flag that sticks to the RIGHT side of the line tip
-# flag drawing at end: triangular flag that sticks ABOVE the line tip
-def draw_flag_at_end(end_pt, base_along, width):
+# flag drawing at end: upside-down triangle with base attached to line end
+def draw_flag_at_end(end_pt, base_length, height):
     ex, ey = end_pt
-    # point back along the line to create flag base
-    back_x = ex - dx * base_along
-    back_y = ey - dy * base_along
-    # "upward" relative to line (rotate 90° CCW)
-    up_x, up_y = -dy, dx
-    # third point offset upward
-    up_point_x = back_x + up_x * width
-    up_point_y = back_y + up_y * width
-    tri = patches.Polygon([[ex, ey], [back_x, back_y], [up_point_x, up_point_y]],
+    # 단위 벡터 (풍향 방향)
+    length = math.sqrt(dx**2 + dy**2)
+    ux, uy = dx/length, dy/length
+    
+    # 직선에 수직 방향 벡터
+    perp_x, perp_y = -uy, ux
+    
+    # 밑변 중심 = 직선 끝점
+    base_cx, base_cy = ex, ey
+    
+    # 밑변 양 끝 좌표
+    base1_x = base_cx + perp_x * (base_length/2)
+    base1_y = base_cy + perp_y * (base_length/2)
+    base2_x = base_cx - perp_x * (base_length/2)
+    base2_y = base_cy - perp_y * (base_length/2)
+    
+    # 삼각형 꼭짓점 (밑변에서 직선 방향으로 height만큼 나간 곳)
+    tip_x = base_cx + ux * height
+    tip_y = base_cy + uy * height
+    
+    tri = patches.Polygon([[base1_x, base1_y],
+                           [base2_x, base2_y],
+                           [tip_x, tip_y]],
                           closed=True, edgecolor="black", facecolor="black", linewidth=1)
     ax.add_patch(tri)
+
+    
 # Now implement wind_speed cases
 if wind_speed == 0:
     # no additional drawing (no main line either)
