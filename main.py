@@ -31,7 +31,7 @@ ax.axis("off")
 # 중심 동그라미 좌표
 cx, cy = 0.5, 0.4
 r = 0.13
-r2 = 0.08
+r2 = 0.06
 
 # 기본 동그라미
 circle = plt.Circle((cx, cy), r, edgecolor="black", facecolor="white", linewidth=1)
